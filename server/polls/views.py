@@ -1,3 +1,15 @@
+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
+#    not use this file except in compliance with the License. You may obtain
+#    a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#    License for the specific language governing permissions and limitations
+#    under the License.
+
 import asyncio
 import os
 import socket
@@ -7,6 +19,12 @@ from aiohttp import web
 
 
 def gen_primes():
+    """Generate primes generator
+
+    Function which simply create a generator of primes
+
+    """
+
     d = {}
     q = 2
     while True:
@@ -21,6 +39,15 @@ def gen_primes():
 
 
 async def find_n_prime(request):
+    """Find the prime which is n-prime
+
+    :param request: HTTP request
+    :type request: aiohttp.web.Request
+    :return: HTTP response containing n-prime
+    :rtype: aiohttp.web.Response
+
+    """
+
     post = await request.post()
 
     n = int(post.get('n'))
@@ -35,6 +62,15 @@ async def find_n_prime(request):
 
 
 async def factorization(request):
+    """Function which is made factorization on value from request
+
+    :param request: HTTP request
+    :type request: aiohttp.web.Request
+    :return: HTTP response containing n-prime
+    :rtype: aiohttp.web.Response
+
+    """
+
     post = await request.post()
 
     n = int(post.get('n'))
@@ -54,6 +90,15 @@ async def factorization(request):
 
 
 async def ping_server(request):
+    """Ping specified host n times
+
+    :param request: HTTP request
+    :type request: aiohttp.web.Request
+    :return: HTTP response containing n-prime
+    :rtype: aiohttp.web.Response
+
+    """
+
     post = await request.post()
     host = post.get('host')
     n = post.get('reps')
@@ -63,6 +108,6 @@ async def ping_server(request):
         stderr=subprocess.PIPE)
     data, err = await process.communicate()
     if not err:
-        return web.Response(text=str(data))
+        return web.Response(text="{0}\n".format(str(data)))
     else:
-        return web.Response(text=str(err))
+        return web.Response(text="{0}\n".format(str(err)))
